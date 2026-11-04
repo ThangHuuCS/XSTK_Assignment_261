@@ -9,7 +9,7 @@ showtext_auto()
 
 data <- read.csv(
     "All_GPUs.csv", 
-    na.strings = c("", "\n", "N/A", "None", "\n- ")
+    na.strings = c("", "\n", "N/A", "None", "\n- ", "\n-")
 )
 
 head(data)
@@ -92,6 +92,9 @@ data_clean <- data_selected %>%
     Pixel_Rate   = as.numeric(str_extract(Pixel_Rate, "\\d+\\.?\\d*")),
     Texture_Rate = as.numeric(str_extract(Texture_Rate, "\\d+\\.?\\d*")),
     Process      = as.numeric(str_extract(Process, "\\d+\\.?\\d*")),
+    ROPs         = as.numeric(str_extract(ROPs, "\\d+\\.?\\d*")),
+    TMUs         = as.numeric(TMUs),
+    Shader       = as.numeric(Shader),
     
     # Logic chuẩn hóa Băng thông (Bỏ vòng lặp For)
     Memory_Bandwidth = case_when(
@@ -107,11 +110,16 @@ data_clean <- data_selected %>%
 # 3. Lọc bỏ các dòng không có biến mục tiêu (Max_Power)
 data_clean <- data_clean %>% filter(!is.na(Max_Power))
 data_clean <- data_clean %>%
+  group_by(Manufacturer) %>%
   mutate(
-    # Cột định lượng (Số): Điền bằng Trung vị (Median)
+    across(where(is.numeric), ~ifelse(is.na(.), median(., na.rm = TRUE), .))
+  ) %>%
+  ungroup() %>%
+  mutate(
+    # Bổ sung trung vị toàn bộ nếu có nhóm hãng bị khuyết 100% một biến nào đó
     across(where(is.numeric), ~ifelse(is.na(.), median(., na.rm = TRUE), .)),
-    # Cột định tính (Chữ/Phân loại): Điền bằng Mode
-    across(where(is.character), ~ifelse(is.na(.), get_mode(.), .))
+    # Điền "Unknown" cho các biến phân loại dạng chữ
+    across(where(is.character), ~ifelse(is.na(.), "Unknown", .))
   )
 glimpse(data_clean)
 print("Tóm tắt thống kê các thông số:")
