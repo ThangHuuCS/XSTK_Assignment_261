@@ -29,8 +29,8 @@ Tệp R `Project.R` chứa toàn bộ mã nguồn và phần giải thích chi t
 - Các gói thư viện (packages) cần thiết: `dplyr`, `ggplot2`, `lubridate`, `corrplot`, `patchwork`, `showtext`, `stringr`
 
 ## Tác giả
-- Võ Hoàng Phi & 2510188
-- Nguyễn Ngọc Nguyên Tài & 2510220
-- Nguyễn Hữu Thắng & 2510225
-- Chế Quang Minh Toàn & 2510244
-- Khúc Thế Hồng Phong & 2510355
+- Võ Hoàng Phi - 2510188
+- Nguyễn Ngọc Nguyên Tài - 2510220
+- Nguyễn Hữu Thắng - 2510225
+- Chế Quang Minh Toàn - 2510244
+- Khúc Thế Hồng Phong - 2510355
