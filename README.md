@@ -24,6 +24,27 @@ Tệp R `Project.R` chứa toàn bộ mã nguồn và phần giải thích chi t
 - So sánh mức giá trung bình giữa GPU của NVIDIA và AMD.
 - Làm nổi bật các đặc trưng chính có ảnh hưởng đến giá của GPU.
 
+## So sánh mô hình dự báo `Max_Power` (Phần 6)
+
+[`MoHinh_Phan6.R`](MoHinh_Phan6.R) so sánh hồi quy tuyến tính bội và Random Forest để dự báo công suất tối đa của GPU (W). Hai mô hình dùng cùng bảy biến giải thích và cùng phép chia 70/30 với seed `99`. Trung vị dùng để điền khuyết được tính từ tập huấn luyện.
+
+### Cách chạy
+
+Cài thêm gói `randomForest` trong R.
+
+```r
+install.packages("randomForest")
+```
+
+Chạy hai lệnh sau trong thư mục repo. `NewProject.R` đọc `All_GPUs.csv` và tạo `GPU_power_truoc_trung_vi.csv` làm đầu vào cho bước so sánh.
+
+```sh
+Rscript NewProject.R
+Rscript MoHinh_Phan6.R
+```
+
+Script in MAE, MSE, RMSE, R² và số dự báo âm trên tập kiểm tra. Với 835 quan sát kiểm tra của lần chia này, Random Forest giảm RMSE từ **42,36 W** xuống **28,67 W** (giảm **32,32%**) so với hồi quy tuyến tính bội.
+
 ## Yêu cầu Hệ thống
 - Phiên bản R >= 4.0
 - Các gói thư viện (packages) cần thiết: `dplyr`, `ggplot2`, `lubridate`, `corrplot`, `patchwork`, `showtext`, `stringr`
