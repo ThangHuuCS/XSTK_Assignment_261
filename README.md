@@ -24,6 +24,29 @@ Tệp R `Project.R` chứa toàn bộ mã nguồn và phần giải thích chi t
 - So sánh mức giá trung bình giữa GPU của NVIDIA và AMD.
 - Làm nổi bật các đặc trưng chính có ảnh hưởng đến giá của GPU.
 
+## Thống kê suy diễn (Phần 5)
+
+[`ThongKeSuyDien_Phan5.R`](ThongKeSuyDien_Phan5.R) thực hiện ANOVA hai nhân tố, so sánh bội Tukey HSD và hồi quy tuyến tính bội theo phần 5 của báo cáo. File chỉ chứa lệnh R, không có comment hoặc lời giải thích.
+
+- ANOVA dùng `Manufacturer * Notebook_GPU`, loại ATI riêng vì không có tổ hợp ATI–Yes. Hồi quy vẫn giữ đủ bốn nhãn `Manufacturer`.
+- Hồi quy chia train/test 70/30 với seed `99`. Trung vị dùng điền khuyết chỉ được tính từ train và áp dụng cho cả hai tập.
+- Script in các kiểm định, hệ số, khoảng tin cậy, VIF/GVIF và MAE, MSE, RMSE, R² trên test. Các dự báo âm được giữ khi tính sai số.
+
+Cài thêm `car` và `lmtest` một lần trong R:
+
+```r
+install.packages(c("car", "lmtest"))
+```
+
+Chạy trong thư mục repo:
+
+```sh
+Rscript NewProject.R
+Rscript ThongKeSuyDien_Phan5.R
+```
+
+`NewProject.R` tạo `GPU_power.csv` và `GPU_power_truoc_trung_vi.csv` làm đầu vào. Với dữ liệu hiện tại, ANOVA có 2689 quan sát, hồi quy có 1946 dòng train và 835 dòng test; MAE khoảng 27,19 W và RMSE khoảng 42,36 W.
+
 ## So sánh mô hình dự báo `Max_Power` (Phần 6)
 
 [`MoHinh_Phan6.R`](MoHinh_Phan6.R) so sánh hồi quy tuyến tính bội và Random Forest để dự báo công suất tối đa của GPU (W). Hai mô hình dùng cùng bảy biến giải thích và cùng phép chia 70/30 với seed `99`. Trung vị dùng để điền khuyết được tính từ tập huấn luyện.
@@ -47,7 +70,7 @@ Script in MAE, MSE, RMSE, R² và số dự báo âm trên tập kiểm tra. V�
 
 ## Yêu cầu Hệ thống
 - Phiên bản R >= 4.0
-- Các gói thư viện (packages) cần thiết: `dplyr`, `ggplot2`, `lubridate`, `corrplot`, `patchwork`, `showtext`, `stringr`
+- Các gói thư viện (packages) cần thiết: `dplyr`, `ggplot2`, `lubridate`, `corrplot`, `patchwork`, `showtext`, `stringr`; phần 5 dùng thêm `car`, `lmtest`
 
 ## Tác giả
 - Võ Hoàng Phi - 2510188
