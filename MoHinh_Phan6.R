@@ -17,13 +17,11 @@ prediction_data$Manufacturer <- factor(
 )
 prediction_data$Notebook_GPU <- factor(prediction_data$Notebook_GPU, levels = c("No", "Yes"))
 
-# Tái lập phép chia theo dòng ở mục 5.2.1.
 set.seed(99, kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
 train_index <- sample.int(nrow(prediction_data), size = floor(0.7 * nrow(prediction_data)))
 train_raw <- prediction_data[train_index, , drop = FALSE]
 test_raw <- prediction_data[-train_index, , drop = FALSE]
 
-# Chỉ dùng tập huấn luyện để tính các trung vị điền khuyết.
 train_by_manufacturer <- split(train_raw, train_raw$Manufacturer, drop = TRUE)
 median_train <- lapply(predictor_num, function(variable) {
   vapply(train_by_manufacturer, function(group) median(group[[variable]], na.rm = TRUE), numeric(1))
