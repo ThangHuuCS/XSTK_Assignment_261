@@ -46,7 +46,7 @@ plot1 <- ggplot(data = na_summary_df, aes(x = reorder(Variable, Missing_Count), 
 print(plot1)
 ggsave("na_count_plot_large.png", plot = plot1, width = 14, height = 16, dpi = 300)
 
-plot2 <- ggplot(data = na_summary_df, aes(x = reorder(Variable, Missing_Percent), y = Missing_Percent)) +
+plot_na <- ggplot(data = na_summary_df, aes(x = reorder(Variable, Missing_Percent), y = Missing_Percent)) +
   geom_bar(stat = "identity", fill = "turquoise3") +
   geom_text(aes(label = Missing_Percent), hjust = -0.1, size = 20, fontface = "bold") +
   coord_flip() +
@@ -63,8 +63,8 @@ plot2 <- ggplot(data = na_summary_df, aes(x = reorder(Variable, Missing_Percent)
     axis.text.x = element_text(size = 40, color = "black"),
     axis.title = element_text(size = 50, face = "bold")
   )
-print(plot2)
-ggsave("na_percentage_plot_large.png", plot = plot2, width = 14, height = 16, dpi = 300)
+print(plot_na)
+ggsave("na_percentage_plot_large.png", plot = plot_na, width = 14, height = 16, dpi = 300)
 
 num_vars <- c("Max_Power", "Core_Speed", "Memory_Bandwidth", "Memory", "TMUs", "Process")
 cat_vars <- c("Manufacturer", "Notebook_GPU")
