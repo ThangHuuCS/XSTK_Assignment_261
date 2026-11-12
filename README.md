@@ -24,6 +24,31 @@ Tệp R `Project.R` chứa toàn bộ mã nguồn và phần giải thích chi t
 - So sánh mức giá trung bình giữa GPU của NVIDIA và AMD.
 - Làm nổi bật các đặc trưng chính có ảnh hưởng đến giá của GPU.
 
+## Thống kê mô tả (Phần 4)
+
+[`MoTa.R`](MoTa.R) thực hiện thống kê mô tả theo phần 4 của báo cáo. File chỉ chứa lệnh R, không có comment hoặc lời giải thích.
+
+- Script tự gọi `source("NewProject.R")` ở đầu file, nên khi chạy `MoTa.R` không cần chạy `NewProject.R` trước. Các đối tượng như `GPU_power`, `GPU_identity`, `GPU_imputation_flags`, `external_summary` được lấy từ lần chạy đó.
+- Đối chiếu ba bảng `GPU_pre` (đọc từ `GPU_power_truoc_trung_vi.csv`), `GPU_power` và `GPU_identity` có cùng số dòng (2781), in `external_summary` và tỷ lệ ô phải điền trung vị của từng biến giải thích.
+- Bảng thống kê mẫu cho 6 biến định lượng (Mean, SD, Min, Q1, Median, Q3, Max) trước khi điền trung vị (`desc_pre`, kèm cỡ mẫu n) và sau khi điền trung vị (`desc_main`).
+- Thống kê `Max_Power` theo `Manufacturer`, theo `Notebook_GPU` và theo tổ hợp hai biến; bảng tần số, tỷ lệ phần trăm, bảng chéo hãng × notebook. `GPU_scope` giới hạn ở AMD và Nvidia không tích hợp để đối chiếu xu hướng.
+- Đồ thị được lưu thành file PNG (150 dpi) trong thư mục chạy: `hinh_barplot`, `hinh_hist_max_power` (thang gốc và thang log), `hinh_hist_cac_bien`, `hinh_hist_theo_notebook`, `hinh_boxplot_hang_notebook`, `hinh_boxplot_4_nhom`, `hinh_scatter`, `hinh_scatter_log` (kèm đường lowess), `hinh_ggpairs_log` và `hinh_tuong_quan`. Đặt `luu_hinh <- FALSE` để không lưu file.
+- Ma trận tương quan Pearson được in cho `GPU_power` (sau điền trung vị) và `GPU_pre` (trước điền trung vị, dùng các cặp đầy đủ). Script cũng liệt kê 10 giá trị `Max_Power` nhỏ nhất và lớn nhất, đếm ngoại lai theo `boxplot.stats` và liệt kê 5 GPU có `Memory_Bandwidth` cao nhất.
+
+Cài thêm `GGally` một lần trong R:
+
+```r
+install.packages("GGally")
+```
+
+Chạy trong thư mục repo:
+
+```sh
+Rscript MoTa.R
+```
+
+Với dữ liệu hiện tại, tập phân tích có 2781 quan sát; `Max_Power` có trung bình khoảng 125,60 W, độ lệch chuẩn khoảng 102,89 W, trung vị 105 W, và có 94 quan sát được `boxplot.stats` xem là ngoại lai.
+
 ## Thống kê suy diễn (Phần 5)
 
 [`ThongKeSuyDien_Phan5.R`](ThongKeSuyDien_Phan5.R) thực hiện ANOVA hai nhân tố, so sánh bội Tukey HSD và hồi quy tuyến tính bội theo phần 5 của báo cáo. File chỉ chứa lệnh R, không có comment hoặc lời giải thích.
@@ -70,7 +95,7 @@ Script in MAE, MSE, RMSE, R² và số dự báo âm trên tập kiểm tra. V�
 
 ## Yêu cầu Hệ thống
 - Phiên bản R >= 4.0
-- Các gói thư viện (packages) cần thiết: `dplyr`, `ggplot2`, `lubridate`, `corrplot`, `patchwork`, `showtext`, `stringr`; phần 5 dùng thêm `car`, `lmtest`
+- Các gói thư viện (packages) cần thiết: `dplyr`, `ggplot2`, `lubridate`, `corrplot`, `patchwork`, `showtext`, `stringr`; phần 4 dùng thêm `GGally`; phần 5 dùng thêm `car`, `lmtest`; phần 6 dùng thêm `randomForest`
 
 ## Tác giả
 - Võ Hoàng Phi - 2510188
