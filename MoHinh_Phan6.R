@@ -1,8 +1,3 @@
-# Chạy từ thư mục chứa All_GPUs.csv và NewProject.R.
-# Cài gói một lần trong R: install.packages("randomForest")
-# Rscript NewProject.R
-# Rscript MoHinh_Phan6.R
-
 if (!requireNamespace("randomForest", quietly = TRUE)) {
   stop('Cần cài gói randomForest bằng install.packages("randomForest").')
 }
