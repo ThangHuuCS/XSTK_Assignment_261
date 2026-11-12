@@ -71,11 +71,9 @@ group_desc(GPU_scope, c("Manufacturer", "Notebook_GPU"))
 
 luu_hinh <- TRUE
 
-# Kich thuoc PNG duoc thu nho (so voi ban cu) de khi chen vao bao cao, chu
-# trong hinh khong bi co nho qua nhieu. Chinh cac thong so o day neu can.
-CEX_NHAN <- 1.6   # co chu nhan truc (xlab, ylab)
-CEX_TRUC <- 1.5   # co chu so/nhan tren truc
-CEX_TIEU <- 1.6   # co chu tieu de
+CEX_NHAN <- 1.6
+CEX_TRUC <- 1.5
+CEX_TIEU <- 1.6
 
 bat_dau <- function(ten, w = 1300, h = 700) {
   if (luu_hinh) png(paste0(ten, ".png"), width = w, height = h, res = 150)
@@ -84,8 +82,6 @@ ket_thuc <- function() {
   if (luu_hinh) invisible(dev.off())
 }
 
-# Chia luoi hinh va dat co chu. Goi SAU bat_dau().
-# par(mfrow) tu dong giam cex (0.83 hoac 0.66), nen dat lai cex = 1 o day.
 luoi <- function(nr = 1, nc = 1, mar = c(5.5, 5.8, 1.5, 1)) {
   par(mfrow = c(nr, nc), mar = mar, mgp = c(3.6, 1, 0))
   par(cex = 1, cex.lab = CEX_NHAN, cex.axis = CEX_TRUC, cex.main = CEX_TIEU)
